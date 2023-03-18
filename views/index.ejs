@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script
+   src="https://kit.fontawesome.com/7daeab2ad9.js"
+   crossorigin="anonymous"
+  ></script>
+  <link rel="stylesheet" href="/style.css" />
+  <title>Rapper CRUD</title>
+ </head>
+ <body>
+  <h1>Current Rappers</h1>
+  <ul>
+   <% info.forEach(rapper => { %>
+   <li>
+    <span class="birth-name"><%= rapper.birthName %></span>
+    <span>aka</span>
+    <span class="rapper-name"><%= rapper.stageName %></span>
+    <span class="likes"><%= rapper.likes %></span>
+    <button><i class="fa-solid fa-thumbs-up"></i></button>
+    <button><i class="fa-solid fa-trash"></i></button>
+   </li>
+   <% }) %>
+  </ul>
+
+  <h2>Add a Rapper:</h2>
+
+  <form action="/addRapper" method="post">
+   <input type="text" placeholder="stage name" name="stageName" />
+   <input type="text" placeholder="birth name" name="birthName" />
+   <input type="submit" />
+  </form>
+
+  <script src="/index.js"></script>
+ </body>
+</html>

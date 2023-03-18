@@ -1,0 +1,9 @@
+.likes {
+ margin-left: 5px;
+}
+
+.birth-name,
+.rapper-name,
+.likes {
+ font-size: 20px;
+}
