@@ -19,9 +19,14 @@
     <span class="birth-name"><%= rapper.birthName %></span>
     <span>aka</span>
     <span class="rapper-name"><%= rapper.stageName %></span>
-    <span class="likes"><%= rapper.likes %></span>
-    <button><i class="fa-solid fa-thumbs-up"></i></button>
-    <button><i class="fa-solid fa-trash"></i></button>
+    <% if (rapper.likes < 1) { %>
+    <span class="likes"></span>
+    <%} else { %>
+    <span class="likes"> <%= rapper.likes %> </span>
+    <% } %>
+
+    <button class="like-btn"><i class="fa-solid fa-thumbs-up"></i></button>
+    <button class="delete-btn"><i class="fa-solid fa-trash"></i></button>
    </li>
    <% }) %>
   </ul>
@@ -29,8 +34,8 @@
   <h2>Add a Rapper:</h2>
 
   <form action="/addRapper" method="post">
-   <input type="text" placeholder="stage name" name="stageName" />
    <input type="text" placeholder="birth name" name="birthName" />
+   <input type="text" placeholder="stage name" name="stageName" />
    <input type="submit" />
   </form>
 

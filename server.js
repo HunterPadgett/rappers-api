@@ -26,9 +26,35 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
     });
   });
 
-  // app.get("/api/:rapper", (req, res) => {
+  app.post("/addRapper", (req, res) => {
+   console.log(req.body);
+   collection
+    .insertOne({
+     stageName: req.body.stageName,
+     birthName: req.body.birthName,
+     likes: 0,
+    })
+    .then((result) => {
+     console.log(`rapper added`);
+     res.redirect("/");
+    })
+    .catch((e) => console.log(`error in /addRapper post req... ${e}`));
+  });
 
-  // });
+  // app.put()
+
+  app.delete("/deleteRapper", (req, res) => {
+   console.log(req.body);
+   collection
+    .deleteOne({
+     stageName: req.body.rapper,
+    })
+    .then((result) => {
+     console.log(`rapper deleted`);
+     res.json("rapper deleted");
+    })
+    .catch((e) => console.log(`error in /deleteRapper delete req... ${e}`));
+  });
 
   app.listen(process.env.PORT || PORT, () => {
    console.log(`running on http://localhost:${PORT}`);
