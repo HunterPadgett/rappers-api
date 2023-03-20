@@ -55,7 +55,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
     .catch((e) => console.log(`error in /deleteRapper delete req... ${e}`));
   });
 
-  app.put("/addLike", (req, res) => {
+  function updateLikes(url, req, res) {
    collection
     .updateOne(
      {
@@ -65,16 +65,24 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
      },
      {
       $set: {
-       likes: req.body.likes + 1,
+       likes: url === "/addLike" ? req.body.likes + 1 : req.body.likes - 1,
       },
      },
      { sort: { _id: -1 }, upsert: false }
     )
     .then((result) => {
-     console.log("added one like");
-     res.json("added one like");
+     console.log(url === "/addLike" ? "added one like" : "removed one like");
+     res.json(url === "/addLike" ? "added one like" : "removed one like");
     })
     .catch((e) => console.log(e));
+  }
+
+  app.put("/addLike", (req, res) => {
+   updateLikes("/addLike", req, res);
+  });
+
+  app.put("/removeLike", (req, res) => {
+   updateLikes("/removeLike", req, res);
   });
 
   app.listen(process.env.PORT || PORT, () => {
