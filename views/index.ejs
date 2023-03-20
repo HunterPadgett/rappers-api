@@ -19,7 +19,7 @@
     <span class="birth-name"><%= rapper.birthName %></span>
     <span>aka</span>
     <span class="rapper-name"><%= rapper.stageName %></span>
-    <% if (rapper.likes < 1) { %>
+    <% if (Number(rapper.likes) < 1) { %>
     <span class="likes"></span>
     <%} else { %>
     <span class="likes"> <%= rapper.likes %> </span>

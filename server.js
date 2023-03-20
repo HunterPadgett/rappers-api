@@ -20,6 +20,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
   app.get("/", (req, res) => {
    collection
     .find()
+    .sort({ likes: -1 })
     .toArray()
     .then((data) => {
      res.render("index.ejs", { info: data });
@@ -41,8 +42,6 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
     .catch((e) => console.log(`error in /addRapper post req... ${e}`));
   });
 
-  // app.put()
-
   app.delete("/deleteRapper", (req, res) => {
    console.log(req.body);
    collection
@@ -54,6 +53,28 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true }).then(
      res.json("rapper deleted");
     })
     .catch((e) => console.log(`error in /deleteRapper delete req... ${e}`));
+  });
+
+  app.put("/addLike", (req, res) => {
+   collection
+    .updateOne(
+     {
+      stageName: req.body.rapperName,
+      birthName: req.body.birthName,
+      likes: req.body.likes,
+     },
+     {
+      $set: {
+       likes: req.body.likes + 1,
+      },
+     },
+     { sort: { _id: -1 }, upsert: false }
+    )
+    .then((result) => {
+     console.log("added one like");
+     res.json("added one like");
+    })
+    .catch((e) => console.log(e));
   });
 
   app.listen(process.env.PORT || PORT, () => {
